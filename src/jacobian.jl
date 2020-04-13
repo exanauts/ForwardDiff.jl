@@ -11,7 +11,7 @@ This method assumes that `isa(f(x), AbstractArray)`.
 
 Set `check` to `Val{false}()` to disable tag checking. This can lead to perturbation confusion, so should be used with care.
 """
-function jacobian(f, x::AbstractArray, cfg::JacobianConfig{T} = JacobianConfig(f, x), ::Val{CHK}=Val{true}()) where {T,CHK}
+function jacobian(f, x::AbstractArray, cfg::JacobianConfig{T} = JacobianConfig(nothing, x), ::Val{CHK}=Val{false}(), timeroutput=nothing) where {T,CHK}
     CHK && checktag(T, f, x)
     if chunksize(cfg) == length(x)
         return vector_mode_jacobian(f, x, cfg)
